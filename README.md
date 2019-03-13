@@ -15,7 +15,7 @@ To run the presentation, follow these steps.
 3. To run the presentation locally:
 
   ```shell
-  yarn run start:presentation
+  yarn run start
   ```
 
 4. Browse to [http://127.0.0.1:8080](http://127.0.0.1:8080) to see the presentation slides.
