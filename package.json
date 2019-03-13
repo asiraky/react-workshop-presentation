@@ -1,0 +1,21 @@
+{
+  "name": "react-hooks-presentation",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "mdx-deck": "1.7.7"
+  },
+  "scripts": {
+    "start": "mdx-deck deck.mdx",
+    "build": "mdx-deck build deck.mdx"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "presentation",
+    "mdx",
+    "slides"
+  ],
+  "author": "Aaron HS",
+  "license": "MIT"
+}

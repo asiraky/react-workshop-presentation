@@ -1,0 +1,252 @@
+export { code as theme } from 'mdx-deck/themes'
+import { Head, Appear, Notes } from 'mdx-deck'
+
+<Head>
+  <title>React Hooks</title>
+</Head>
+
+# What are React Hooks?
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>A Hook is a special function that lets you “hook into” React features. For example, useState is a Hook that lets you add React state to function components.</li>
+    <li>If you write a function component and realize you need to add some state to it, previously you had to convert it to a class. Now you can use a Hook inside the existing function component.</li>
+    <li>Can be custom written </li>
+    <li>Are available now for React Web, and will be available in the next React Native release!</li>
+  </Appear>
+</ul>
+---
+## Old code like this:
+
+```jsx
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+  render() {
+    return (
+      <div>
+        <p>You clicked {this.state.count} times</p>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Click me
+        </button>
+      </div>
+    );
+  }
+}
+```
+---
+## Can be translated into this:
+```jsx
+import React, { useState } from 'react';
+
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+```
+---
+## Declaring a State Variable:
+In a class, we initialize the count state to 0 by setting this.state to { count: 0 } in the constructor:
+```jsx
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+```
+---
+## Declaring a State Variable:
+In a function component, we have no this, so we can’t assign or read this.state. Instead, we call the useState Hook directly inside our component:
+```jsx
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+```
+---
+## What does calling useState do? 
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>It declares a “state variable”.</li>
+    <li>Our variable is called count but we could call it anything else.</li>
+    <li>It allows us to store state for our component, similar to this.state does for class component.</li>
+  </Appear>
+</ul>
+---
+## What does useState return?
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>It returns a pair of values: the current state and a function that updates it.</li>
+    <li>This is why we write const [count, setCount] = useState().</li>
+    <li>This is similar to this.state.count and this.setState in a class, except you get them in a pair.</li>
+  </Appear>
+</ul>
+---
+## What do we pass to useState as an argument?
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>The only argument to the useState() Hook is the initial state</li>
+    <li>Unlike with classes, the state doesn’t have to be an object. We can keep a number or a string if that’s all we need.</li>
+    <li>In our example, we just want a number for how many times the user clicked, so pass 0 as initial state for our variable.</li>
+    <li>If we wanted to store two different values in state, we would call useState() twice.</li>
+  </Appear>
+</ul>
+---
+In a function component, we have no this, so we can’t assign or read this.state. Instead, we call the useState Hook directly inside our component:
+```jsx
+import React, { useState } from 'react';
+
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+```
+We declare a state variable called count, and set it to 0. React will remember its current value between re-renders, and provide the most recent one to our function. If we want to update the current count, we can call setCount.
+---
+# Reading State:
+When we want to display the current co unt in a class, we read this.state.count:
+```jsx
+<p>You clicked {this.state.count} times</p>
+```
+---
+# Reading State:
+In a function, we can use count directly:
+```jsx
+<p>You clicked {count} times</p>
+```
+---
+# Updating State:
+In a class, we need to call this.setState() to update the count state:
+```jsx
+<button onClick={() => this.setState({ count: this.state.count + 1 })}>
+  Click me
+</button>
+  ```
+---
+## Updating State:
+In a function, we already have setCount and count as variables so we don’t need this:
+```jsx
+<button onClick={() => setCount(count + 1)}>
+  Click me
+</button>
+```
+---
+## Recap:
+Let’s now recap what we learned line by line and check our understanding.
+```jsx
+ 1:  import React, { useState } from 'react';
+ 2:
+ 3:  function Example() {
+ 4:    const [count, setCount] = useState(0);
+ 5:
+ 6:    return (
+ 7:      <div>
+ 8:        <p>You clicked {count} times</p>
+ 9:        <button onClick={() => setCount(count + 1)}>
+10:         Click me
+11:        </button>
+12:      </div>
+13:    );
+14:  }
+```
+---
+## Using multiple:
+```jsx
+function ExampleWithManyStates() {
+  // Declare multiple state variables!
+  const [age, setAge] = useState(42);
+  const [fruit, setFruit] = useState('banana');
+  const [todos, setTodos] = useState([{ text: 'Learn Hooks' }]);
+  ...
+```
+---
+The Effect Hook lets you perform side effects in function components:
+```jsx
+function Example() {
+  const [count, setCount] = useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+```
+---
+Note how we have to duplicate the code between these two lifecycle methods in class.
+```jsx
+class Example extends React.Component {
+  componentDidMount() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+
+  componentDidUpdate() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+}
+```
+---
+But using useEffect we can simply write this as:
+```jsx
+useEffect(() => {
+  document.title = `You clicked ${count} times`;
+});
+```
+---
+## What does useEffect do? 
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>By using this Hook, you tell React that your component needs to do something after render</li>
+    <li>React will remember the function you passed (we’ll refer to it as our “effect”), and call it later after performing the DOM updates</li>
+    <li>In this effect, we set the document title, but we could also perform data fetching or call some other API</li>
+  </Appear>
+</ul>
+---
+## Why is useEffect called inside a component?
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>Placing useEffect inside the component lets us access the count state variable (or any props) right from the effect</li>
+    <li>We don’t need a special API to read it — it’s already in the function scope</li>
+    <li>Hooks embrace JavaScript closures and avoid introducing React-specific APIs where JavaScript already provides a solution</li>
+  </Appear>
+</ul>
+---
+## Does useEffect run after every render?
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li>Yes! By default, it runs both after the first render and after every update</li>
+    <li>Instead of thinking in terms of “mounting” and “updating”, you might find it easier to think that effects happen “after render”</li>
+  </Appear>
+</ul>
+---
+# Conclusion
+React Hooks are not really new feature that popped out just now. They are another (better ❓) way of doing React components that need to have state and/or lifecycle methods. Actually, they use the same internal logic that is being used currently by the class components. 
+---
+# References
+<ul style={{textAlign: "left"}}>
+  <Appear>
+    <li><a href="https://reactjs.org/docs/hooks-intro.html">https://reactjs.org/docs/hooks-intro.html</a> - Official ReactJS blog.</li>
+  </Appear>
+</ul>
+---
